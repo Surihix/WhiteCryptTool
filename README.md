@@ -1,5 +1,5 @@
 # WhiteCryptTool
-This tool allows you to encrypt and decrypt the filelist files from XIII-2 and XIII-LR as well as the clb files from all the three games. 
+This tool allows you to decrypt and encrypt the filelist files from XIII-2 and XIII-LR as well as the clb files from all the three games. 
 
 The program should be launched from command prompt with a function switch, a filetype switch and with the input file. a list of valid function and filetype switches are given below.
 
