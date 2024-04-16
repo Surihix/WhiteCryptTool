@@ -9,6 +9,7 @@ namespace WhiteCryptTool.SupportClasses
         public static void ExitProgram(this ExitType exitType, string exitMsg)
         {
             var exitMsgType = "";
+            int exitCode = 0;
 
             switch (exitType)
             {
@@ -18,13 +19,23 @@ namespace WhiteCryptTool.SupportClasses
 
                 case ExitType.Error:
                     exitMsgType = "Error: ";
+                    exitCode = 1;
+                    break;
+
+                case ExitType.Exception:
+                    exitCode = 2;
                     break;
             }
 
             Console.WriteLine("");
             Console.WriteLine($"{exitMsgType}{exitMsg}");
-            Console.ReadLine();
-            Environment.Exit(0);
+
+            if (exitCode == 1 || exitCode == 2)
+            {
+                Console.ReadLine();
+            }
+
+            Environment.Exit(exitCode);
         }
 
         public static void ExCopyTo(this Stream inStream, Stream outStream, long size)
@@ -60,6 +71,20 @@ namespace WhiteCryptTool.SupportClasses
 
             File.Delete(ogFile);
             File.Move(processedFile, newFile);
+        }
+
+        public static bool CheckPostDecryption(this string inFile, ref uint cryptBodySize, uint startPosition)
+        {
+            bool isDecryptedCorrectly = false;
+
+            using (var checkStream = new BinaryReader(File.Open(inFile, FileMode.Open, FileAccess.Read)))
+            {
+                cryptBodySize -= 8;
+                checkStream.BaseStream.Position = startPosition + cryptBodySize;
+                isDecryptedCorrectly = checkStream.ReadUInt32() == cryptBodySize;
+            }
+
+            return isDecryptedCorrectly;
         }
     }
 }

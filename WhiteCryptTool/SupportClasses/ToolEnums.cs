@@ -5,7 +5,8 @@
         public enum ExitType
         {
             Success,
-            Error
+            Error,
+            Exception
         }
 
         public enum CryptActions

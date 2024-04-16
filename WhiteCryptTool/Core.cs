@@ -84,7 +84,7 @@ namespace WhiteCryptTool
             }
             catch (Exception ex)
             {
-                ExitType.Error.ExitProgram($"An Exception has occured\n{ex}");
+                ExitType.Exception.ExitProgram($"An Exception has occured\n\n{ex}");
             }
         }
 

@@ -1,7 +1,7 @@
-﻿using WhiteCryptTool.CryptoClasses;
-using WhiteCryptTool.SupportClasses;
-using System;
+﻿using System;
 using System.IO;
+using WhiteCryptTool.CryptoClasses;
+using WhiteCryptTool.SupportClasses;
 using static WhiteCryptTool.SupportClasses.ToolEnums;
 
 namespace WhiteCryptTool
@@ -74,7 +74,16 @@ namespace WhiteCryptTool
 
                         inFile.CreateFinalFile(inFile + ".dec");
 
-                        ExitType.Success.ExitProgram($"Finished decrypting '{Path.GetFileName(inFile)}'.");
+                        bool isDecryptedCorrectly = inFile.CheckPostDecryption(ref cryptBodySize, 32);
+
+                        if (isDecryptedCorrectly)
+                        {
+                            ExitType.Success.ExitProgram($"Finished decrypting '{Path.GetFileName(inFile)}'.");
+                        }
+                        else
+                        {
+                            ExitType.Error.ExitProgram("Filelist file was not decrypted correctly.");
+                        }
                         break;
 
                     case CryptActions.e:

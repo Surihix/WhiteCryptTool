@@ -52,7 +52,16 @@ namespace WhiteCryptTool
 
                         inFile.CreateFinalFile(inFile + ".dec");
 
-                        ExitType.Success.ExitProgram($"Finished decrypting '{Path.GetFileName(inFile)}'.");
+                        bool isDecryptedCorrectly = inFile.CheckPostDecryption(ref cryptBodySize, 8);
+
+                        if (isDecryptedCorrectly)
+                        {
+                            ExitType.Success.ExitProgram($"Finished decrypting '{Path.GetFileName(inFile)}'.");
+                        }
+                        else
+                        {
+                            ExitType.Error.ExitProgram("clb file was not decrypted correctly.");
+                        }
                         break;
 
                     case CryptActions.e:
